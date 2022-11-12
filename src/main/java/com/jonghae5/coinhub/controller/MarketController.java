@@ -20,7 +20,8 @@ import java.util.Map;
 @Slf4j
 public class MarketController {
 
-    private CommonMarketService commonMarketService;
+    private final CommonMarketService commonMarketService;
+    private final Map<String, MarketService> marketServices ;
     /**
      * 코인의 최근 가격 : 어떤 마켓인지, 어떤 코인인지
      * @return
@@ -31,5 +32,15 @@ public class MarketController {
             @RequestParam String coin
     ) {
         return commonMarketService.getPrice(market, coin);
+    }
+
+    @GetMapping("/coins")
+    public List<String> getCoins(@RequestParam String market) {
+        return CommonMarketService.getMarketService(marketServices, market).getCoins();
+    }
+
+    @GetMapping("/common-coins")
+    public List<String> getCommonCoins(@RequestParam String market1, @RequestParam String market2) {
+        return commonMarketService.getCommonCoin(market1,market2);
     }
 }

@@ -17,4 +17,6 @@ public interface MarketService {
     Map<String, Double> calculateFee(List<String> commonCoins, double amount);
 
     CoinSellDTO calculateSell(List<String> commonCoins, double amount);
+
+    List<String> getCoins();
 }

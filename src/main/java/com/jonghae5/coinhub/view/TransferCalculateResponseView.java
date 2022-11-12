@@ -14,7 +14,7 @@ import java.util.Map;
 public class TransferCalculateResponseView {
     private String coin;
     private double mount;
-    private Map<Double, Double> buOrderBook;
+    private Map<Double, Double> buyOrderBook;
     private Map<Double, Double> sellOrderBook;
 
     // DTO -> View

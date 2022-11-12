@@ -8,9 +8,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +40,18 @@ public class UpbitMarketService implements MarketService {
     @Override
     public CoinSellDTO calculateSell(List<String> commonCoins, double amount) {
         return null;
+    }
+
+    @Override
+    public List<String> getCoins() {
+//        return List.of("A","B","D");
+
+        List<String> result = new ArrayList<>();
+        upbitFeignClient.getMarketCode().forEach(x -> {
+            if(x.getMarket().startsWith("KRW")) {
+                result.add(x.getMarket().substring(4).toUpperCase());
+            }
+        });
+        return result;
     }
 }
