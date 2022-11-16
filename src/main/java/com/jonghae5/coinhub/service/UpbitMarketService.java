@@ -38,7 +38,7 @@ public class UpbitMarketService implements MarketService {
     }
     //TODO
     @Override
-    public CoinSellDTO calculateSell(List<String> commonCoins, double amount) {
+    public CoinSellDTO calculateSell(CoinBuyDTO buyDTO) {
         return null;
     }
 

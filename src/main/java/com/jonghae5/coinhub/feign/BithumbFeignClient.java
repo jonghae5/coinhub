@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Map;
 
 @FeignClient(name = "bithumb", url = "https://api.bithumb.com/public")
-public interface BithumbeignClient {
+public interface BithumbFeignClient {
 
     @GetMapping("/ticker/{coin}")
     BithumbResponse<BithumbCoinPrice> getCoinPrice(@PathVariable("markets") String coin);
 
     @GetMapping("/assetsstatus/ALL")
     BithumbResponse<Map<String,BithumbAssetEachStatus>> getAssetStatus();
+
+    @GetMapping("/orderbook/ALL_KRW")
+    BithumbResponse<Map<String,Object>> getOrderBook();
 }
