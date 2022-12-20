@@ -2,6 +2,7 @@ package com.jonghae5.coinhub.feign;
 
 import com.jonghae5.coinhub.model.UpbitCoinPrice;
 import com.jonghae5.coinhub.model.UpbitMarketCode;
+import com.jonghae5.coinhub.model.UpbitOrderBooks;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,8 +13,11 @@ import java.util.List;
 public interface UpbitFeignClient {
 
     @GetMapping("/ticker")
-    public List<UpbitCoinPrice> getCoinPrice(@RequestParam("markets") String coin);
+    List<UpbitCoinPrice> getCoinPrice(@RequestParam("markets") String coin);
 
     @GetMapping("/market/all")
-    public List<UpbitMarketCode> getMarketCode();
+    List<UpbitMarketCode> getMarketCode();
+
+    @GetMapping("/orderbook")
+    List<UpbitOrderBooks> getOrderBooks(@RequestParam List<String> markets);
 }

@@ -4,6 +4,7 @@ import com.jonghae5.coinhub.dto.CoinBuyDTO;
 import com.jonghae5.coinhub.dto.CoinSellDTO;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -14,9 +15,9 @@ public interface MarketService {
 
     CoinBuyDTO calculateBuy(List<String> commonCoins, double amount);
 
-    CoinSellDTO calculateSell(CoinBuyDTO buyDTO);
+    CoinSellDTO calculateSell(Map<String /*Coin Name*/, Double /*Amount*/> amounts);
 
-    Map<String, Double> calculateFee(List<String> commonCoins, double amount);
+    Map<String /*Coin Name*/, Double /*Withdrawal Fee */> calculateFee() throws IOException;
 
     List<String> getCoins();
 }

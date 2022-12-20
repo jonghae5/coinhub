@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class BithumbMarketServiceTest {
+
     @Mock
     private BithumbFeignClient bithumbFeignClient;
 
@@ -88,29 +90,30 @@ class BithumbMarketServiceTest {
         assertEquals(1, result.getOrderBooks().get("C").get(2D));
     }
 
-//    @Test
-//    void calculateSellTest() {
-//        // given
-//        Map<String, Double> amounts = Map.of("A", 2.5, "B", 3D, "C", 123D);
-//        BithumbResponse<Map<String, Object>> mockOrderBook = mockBithumbOrderBook();
-//        when(bithumbFeignClient.getOrderBook()).thenReturn(mockOrderBook);
-//
-//        // when
+    @Test
+    void calculateSellTest() {
+        // given
+        Map<String, Double> amounts = Map.of("A", 2.5, "B", 3D, "C", 123D);
+        BithumbResponse<Map<String, Object>> mockOrderBook = mockBithumbOrderBook();
+        when(bithumbFeignClient.getOrderBook()).thenReturn(mockOrderBook);
+
+        // when
 //        CoinSellDTO result = bithumbMarketService.calculateSell(new CoinBuyDTO(amounts, null));
-//
-//        // then
-//        assertEquals(4*1 + 2*1 + 1*0.5, result.getAmounts().get("A"));
-//        assertEquals(1, result.getOrderBooks().get("A").get(4D));
-//        assertEquals(1, result.getOrderBooks().get("A").get(2D));
-//        assertEquals(0.5, result.getOrderBooks().get("A").get(1D));
-//
-//        assertEquals(4*2 + 2*1, result.getAmounts().get("B"));
-//        assertEquals(2, result.getOrderBooks().get("B").get(4D));
-//        assertEquals(1, result.getOrderBooks().get("B").get(2D));
-//
-//        assertNull(result.getAmounts().get("C"));
-//        assertNull(result.getOrderBooks().get("C"));
-//    }
+        CoinSellDTO result = bithumbMarketService.calculateSell(amounts);
+
+        // then
+        assertEquals(4*1 + 2*1 + 1*0.5, result.getAmounts().get("A"));
+        assertEquals(1, result.getOrderBooks().get("A").get(4D));
+        assertEquals(1, result.getOrderBooks().get("A").get(2D));
+        assertEquals(0.5, result.getOrderBooks().get("A").get(1D));
+
+        assertEquals(4*2 + 2*1, result.getAmounts().get("B"));
+        assertEquals(2, result.getOrderBooks().get("B").get(4D));
+        assertEquals(1, result.getOrderBooks().get("B").get(2D));
+
+        assertNull(result.getAmounts().get("C"));
+        assertNull(result.getOrderBooks().get("C"));
+    }
 
     private BithumbResponse<BithumbCoinPrice> mockBithumbCoinPrice(String price) {
         BithumbResponse response = new BithumbResponse();
@@ -135,40 +138,40 @@ class BithumbMarketServiceTest {
         result.setData(
                 Map.of(
                         "A", Map.of(
-                                "bids", List.of( // wanna Buy
+                                "bids", new ArrayList<>(List.of( // wanna Buy
                                         Map.of("price", "4","quantity","1"),
                                         Map.of("price", "2","quantity","1"),
                                         Map.of("price", "1","quantity","1")
-                                ),
-                                "asks", List.of( // wanna Sell
+                                )),
+                                "asks", new ArrayList<>(List.of( // wanna Sell
                                         Map.of("price", "1","quantity","1"), // 1
                                         Map.of("price", "2","quantity","1"), // 2
                                         Map.of("price", "4","quantity","1") // 2
-                                )
+                                ))
                         ),
                         "B", Map.of(
-                                "bids", List.of( // wanna Buy
+                                "bids", new ArrayList<>(List.of( // wanna Buy
                                         Map.of("price", "4","quantity","2"),
                                         Map.of("price", "2","quantity","2"),
                                         Map.of("price", "1","quantity","2")
-                                ),
-                                "asks", List.of( // wanna Sell
+                                )),
+                                "asks", new ArrayList<>(List.of( // wanna Sell
                                         Map.of("price", "1","quantity","2"), // 2
                                         Map.of("price", "2","quantity","2"), // 1.5
                                         Map.of("price", "4","quantity","2")
-                                )
+                                ))
                         ),
                         "C", Map.of(
-                                "bids", List.of( // wanna Buy
+                                "bids", new ArrayList<>(List.of( // wanna Buy
                                         Map.of("price", "4","quantity","3"),
                                         Map.of("price", "2","quantity","3"),
                                         Map.of("price", "1","quantity","3")
-                                ),
-                                "asks", List.of( // wanna Sell
+                                )),
+                                "asks", new ArrayList<>(List.of( // wanna Sell
                                         Map.of("price", "1","quantity","3"), // 3
                                         Map.of("price", "2","quantity","3"), // 1
                                         Map.of("price", "4","quantity","3")
-                                )
+                                ))
                         )
                 )
         );
